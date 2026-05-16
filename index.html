@@ -408,18 +408,13 @@ async function submitOrder(){
   const formData = new FormData(orderForm);
   formData.set('form-name', 'orders');
 
-  const params = new URLSearchParams();
-  for (const [key, value] of formData.entries()) {
-    params.append(key, value);
-  }
-
   try {
     const response = await fetch('/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: params.toString()
+      body: new URLSearchParams(formData).toString()
     });
 
     if (response.ok) {
