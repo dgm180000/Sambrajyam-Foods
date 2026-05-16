@@ -207,7 +207,7 @@
 </div>
 <div class="mo" id="orderModal">
   <div class="md" id="orderModalInner">
-<form name="orders" method="POST" data-netlify="true" onsubmit="event.preventDefault(); submitOrder()">
+<form id="checkoutForm" name="orders" method="POST" data-netlify="true" onsubmit="event.preventDefault(); submitOrder()">
   <input type="hidden" name="form-name" value="orders">
       <input type="hidden" id="orderDetailsInput" name="Order Details" value=""/>
       <div class="mh">📋 Your Details <button class="xb" onclick="closeCheckout()">✕</button></div>
@@ -414,7 +414,7 @@ async function submitOrder(){
 
   document.getElementById('orderDetailsInput').value = orderText;
 
-  const orderForm = document.querySelector('form[name="orders"]');
+  const orderForm = document.getElementById('checkoutForm');
   const formData = new FormData(orderForm);
   formData.set('form-name', 'orders');
 
