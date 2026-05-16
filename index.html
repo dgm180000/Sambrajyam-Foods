@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sambrajyam Foods — The Empire of Taste</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&family=Noto+Sans+Telugu:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--cream:#FDF6ED;--al:#FAE9C8;--am:#E8A028;--amd:#B87618;--sp:#C2440A;--spd:#8B2E05;--br:#4A2408;--gr:#3A6B35;--tx:#2C1A08;--txm:#7A5535;--bo:#E8D5B5;--wh:#FFFAF4}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--tx);font-size:15px}
+  nav{background:var(--br);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:100}
+  .nl{font-family:'Playfair Display',serif;color:var(--am);font-size:1.35rem;font-weight:700}
+  .hero{background:var(--br);min-height:calc(95vh - 58px);padding:4rem 1.5rem 1rem;text-align:center;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;gap:0.65rem}
+  .nl span{color:rgba(253,246,237,0.6);font-size:0.65rem;display:block;font-family:'Inter',sans-serif;font-weight:400;letter-spacing:0.1em;text-transform:uppercase}
+  .nr{display:flex;gap:1rem;align-items:center}
+  .nr a{color:rgba(250,233,200,0.8);text-decoration:none;font-size:0.95rem}
+  .cart-badge{background:var(--am);color:var(--br);border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700}
+  .hb{display:inline-flex;align-items:center;justify-content:center;background:rgba(232,160,40,0.15);border:1px solid rgba(232,160,40,0.3);color:var(--am);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.45rem 1rem;border-radius:2rem;margin-bottom:0.95rem;max-width:22rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:3.2rem;color:var(--am);line-height:1.05;margin-bottom:0.2rem}
+  .ht{font-family:'Noto Sans Telugu',sans-serif;color:rgba(250,233,200,0.85);font-size:1.35rem;margin-bottom:0.4rem}
+  .ht-sub{color:rgba(253,246,237,0.45);font-size:0.95rem;font-style:italic;margin-bottom:0.5rem}
+  .palace-wrap{width:100%;max-width:820px;margin:0 auto;opacity:0.92}
+  .hero-text{padding:1.75rem 1.5rem 3rem;max-width:760px;margin:0 auto}
+  .hero p{color:rgba(253,246,237,0.75);font-size:1rem;line-height:1.8;max-width:620px;margin:0 auto 2rem}
+  .ha{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+  .bp{background:var(--sp);color:white;padding:0.7rem 1.5rem;border-radius:2rem;border:none;font-size:0.9rem;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;display:inline-block}
+  .feat{background:var(--al);padding:1.2rem 1.5rem;display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;border-radius:0;max-width:none;width:calc(100% + 3rem);margin:-1.5rem -1.5rem 2rem;position:relative;z-index:1;box-shadow:0 14px 40px rgba(0,0,0,0.09)}
+  .fi{display:flex;align-items:center;gap:0.6rem;font-size:0.9rem;color:var(--br)}
+  section{padding:3rem 2rem;max-width:1200px;margin:0 auto}
+  .st{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--spd);margin-bottom:0.3rem}
+  .ss{color:var(--txm);font-size:0.88rem;margin-bottom:1.25rem}
+  .tabs{display:flex;gap:0.3rem;flex-wrap:wrap;margin-bottom:1.75rem;border-bottom:2px solid var(--bo)}
+  .tab{background:none;border:none;padding:0.5rem 0.85rem;font-family:'Inter',sans-serif;font-size:0.78rem;color:var(--txm);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+  .tab.active{color:var(--sp);border-bottom-color:var(--sp);font-weight:600}
+  #menu,#about{scroll-margin-top:80px}
+  .mg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+  @media(max-width:980px){.mg{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:640px){.mg{grid-template-columns:1fr;}}
+  .mc{background:var(--wh);border:1px solid var(--bo);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.2s,box-shadow 0.2s}
+  .mc.expanded{border-color:var(--am);box-shadow:0 4px 20px rgba(74,36,8,0.15)}
+  .card-pending{width:100%;height:180px;background:var(--al);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.4rem;border-bottom:1px solid var(--bo)}
+  .card-pending svg{width:32px;height:32px;opacity:0.4}
+  .card-pending span{font-size:0.72rem;color:var(--txm);letter-spacing:0.05em;font-style:italic}
+  .card-img{width:100%;height:180px;object-fit:cover;display:block}
+  .cb2{padding:0.85rem 1rem 1rem;flex:1;display:flex;flex-direction:column}
+  .cn{font-weight:600;font-size:0.9rem;margin-bottom:0.25rem;line-height:1.3}
+  .cd{font-size:0.78rem;color:var(--txm);line-height:1.5;flex:1;margin-bottom:0.85rem}
+  .cf{display:flex;align-items:center;justify-content:space-between}
+  .cp{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--sp)}
+  .cp sup{font-size:0.65rem;vertical-align:super;font-family:'Inter',sans-serif}
+  .vb{display:inline-flex;align-items:center;gap:3px;font-size:0.65rem;color:var(--gr);border:1px solid var(--gr);border-radius:4px;padding:2px 5px;margin-top:3px}
+  .vd{width:6px;height:6px;background:var(--gr);border-radius:50%}
+  .ab{background:var(--sp);color:white;border:none;border-radius:2rem;padding:0.35rem 0.85rem;font-size:0.8rem;font-family:'Inter',sans-serif;cursor:pointer}
+  .qc{display:flex;align-items:center;gap:0.4rem;background:var(--al);border-radius:2rem;padding:0.25rem 0.5rem}
+  .qb{background:none;border:none;color:var(--sp);font-size:1rem;cursor:pointer;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:700}
+  .qn{font-size:0.85rem;font-weight:600;min-width:14px;text-align:center}
+  .instr-panel{display:none;padding:0 1rem 1rem;border-top:1px solid var(--bo);background:var(--cream)}
+  .instr-panel.open{display:block}
+  .instr-panel label{display:block;font-size:0.78rem;font-weight:600;color:var(--tx);margin:0.75rem 0 0.3rem}
+  .instr-panel textarea{width:100%;padding:0.55rem 0.7rem;border:1px solid var(--bo);border-radius:8px;font-size:0.82rem;font-family:'Inter',sans-serif;background:var(--wh);color:var(--tx);resize:none;height:68px;line-height:1.5}
+  .instr-panel textarea:focus{outline:none;border-color:var(--am)}
+  .instr-row{display:flex;gap:0.5rem;margin-top:0.6rem}
+  .instr-cancel{flex:1;background:transparent;border:1px solid var(--bo);color:var(--txm);padding:0.5rem;border-radius:2rem;font-size:0.8rem;font-family:'Inter',sans-serif;cursor:pointer}
+  .instr-confirm{flex:2;background:var(--sp);color:white;border:none;padding:0.5rem;border-radius:2rem;font-size:0.8rem;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer}
+  .co{position:fixed;inset:0;background:rgba(44,26,8,0.5);z-index:200;display:none;align-items:flex-start;justify-content:flex-end}
+  .co.open{display:flex}
+  .cp2{background:var(--wh);width:min(380px,100vw);height:100vh;overflow-y:auto;display:flex;flex-direction:column}
+  .ch{background:var(--br);padding:1.1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;color:var(--am);font-family:'Playfair Display',serif;font-size:1.2rem;position:sticky;top:0}
+  .xb{background:none;border:none;color:rgba(250,233,200,0.7);font-size:1.4rem;cursor:pointer}
+  .ci{flex:1;padding:0.85rem 1.25rem}
+  .ce2{text-align:center;padding:2.5rem 1rem;color:var(--txm)}
+  .cei{font-size:2.5rem;margin-bottom:0.75rem;display:block}
+  .cit{display:flex;gap:0.6rem;align-items:flex-start;padding:0.75rem 0;border-bottom:1px solid var(--bo)}
+  .cithumb{width:42px;height:42px;border-radius:8px;background:var(--al);flex-shrink:0}
+  .cii{flex:1}
+  .cin{font-weight:500;font-size:0.9rem}
+  .cip{font-size:0.8rem;color:var(--txm)}
+  .ci-note{font-size:0.72rem;color:var(--spd);font-style:italic;margin-top:2px}
+  .cic{display:flex;align-items:center;gap:0.35rem;flex-shrink:0}
+  .cib{background:var(--al);border:none;color:var(--sp);width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.95rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .ciq{font-weight:600;min-width:18px;text-align:center;font-size:0.85rem}
+  .cf2{padding:1.1rem 1.25rem;border-top:2px solid var(--bo);background:var(--cream)}
+  .tr{display:flex;justify-content:space-between;font-size:0.85rem;padding:0.25rem 0;color:var(--txm)}
+  .tr.tot{font-weight:600;color:var(--tx);font-size:1rem;border-top:1px solid var(--bo);padding-top:0.5rem;margin-top:0.25rem}
+  .ckb{width:100%;background:var(--sp);color:white;border:none;padding:0.8rem;border-radius:2rem;font-size:0.95rem;font-family:'Inter',sans-serif;font-weight:600;cursor:pointer;margin-top:0.85rem}
+  .mo{position:fixed;inset:0;background:rgba(44,26,8,0.6);z-index:300;display:none;align-items:center;justify-content:center;padding:1rem}
+  .mo.open{display:flex}
+  .md{background:var(--wh);border-radius:16px;width:min(460px,100%);max-height:90vh;overflow-y:auto}
+  .mh{background:var(--br);padding:1.1rem 1.25rem;border-radius:16px 16px 0 0;display:flex;justify-content:space-between;align-items:center;color:var(--am);font-family:'Playfair Display',serif;font-size:1.15rem}
+  .mb{padding:1.25rem}
+  .fg{margin-bottom:1rem}
+  .fl{display:block;font-size:0.8rem;font-weight:500;color:var(--txm);margin-bottom:0.35rem}
+  .fi2{width:100%;padding:0.6rem 0.8rem;border:1px solid var(--bo);border-radius:8px;font-size:0.9rem;font-family:'Inter',sans-serif;background:var(--cream);color:var(--tx)}
+  .fi2:focus{outline:none;border-color:var(--am)}
+  .fr{display:grid;grid-template-columns:1fr 1fr;gap:0.6rem}
+  .osb{background:var(--al);border-radius:8px;padding:0.8rem;margin-bottom:1rem;font-size:0.85rem;color:var(--br)}
+  .ost{font-weight:600;margin-bottom:0.4rem}
+  .sl{display:flex;justify-content:space-between;padding:0.2rem 0;font-size:0.85rem}
+  .sl-note{font-size:0.72rem;color:var(--spd);font-style:italic;padding:0.1rem 0 0.3rem}
+  .stot{border-top:1px solid var(--bo);margin-top:0.4rem;padding-top:0.4rem;font-weight:700}
+  textarea.fi2{resize:vertical;min-height:64px}
+  .about{background:var(--br);color:var(--cream);padding:3.5rem 1.5rem;text-align:center}
+  .ai{max-width:580px;margin:0 auto}
+  .about h2{font-family:'Playfair Display',serif;color:var(--am);font-size:1.8rem;margin-bottom:1rem}
+  .about p{opacity:0.78;line-height:1.75;font-size:0.9rem}
+  .ss2{text-align:center;padding:2.5rem 1.5rem}
+  .si{font-size:3.5rem;margin-bottom:0.85rem;display:block}
+  .ss2 h2{font-family:'Playfair Display',serif;color:var(--spd);font-size:1.4rem;margin-bottom:0.6rem}
+  .ss2 p{color:var(--txm);font-size:0.9rem;line-height:1.65}
+  .on{font-weight:700;color:var(--sp)}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nl">Sambrajyam Foods<span>The Empire of Taste</span></div>
+  <div class="nr">
+    <a href="#menu">Menu</a>
+    <a href="#about">Our Story</a>
+    <div onclick="openCart()" role="button" style="background:transparent;border:1px solid rgba(232,160,40,0.55);padding:0.45rem 1rem;border-radius:2rem;cursor:pointer;font-size:0.95rem;font-family:'Inter',sans-serif;font-weight:600;display:flex;align-items:center;gap:0.45rem;color:rgba(250,233,200,0.8);">
+      🛒 Cart <span class="cart-badge" id="cartCount">0</span>
+    </div>
+  </div>
+</nav>
+<div class="hero">
+  <span class="hb">Fresh · Homemade · Authentic</span>
+  <h1>Sambrajyam Foods</h1>
+  <p class="ht">సామ్రాజ్యం ఫుడ్స</p>
+  <p class="ht-sub">The Empire of Taste</p>
+  <div class="palace-wrap">
+    <svg width="100%" viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg">
+      <rect x="270" y="90" width="140" height="110" fill="#B87618"/><rect x="290" y="70" width="100" height="30" fill="#C8901A"/><rect x="310" y="50" width="60" height="25" fill="#D4A020"/><rect x="325" y="30" width="30" height="24" fill="#C8901A"/><ellipse cx="340" cy="28" rx="16" ry="12" fill="#D4A020"/><ellipse cx="340" cy="18" rx="9" ry="7" fill="#C8901A"/><circle cx="340" cy="11" r="5" fill="#E8B830"/><circle cx="340" cy="5" r="3" fill="#D4A020"/>
+      <rect x="200" y="110" width="80" height="90" fill="#A06810"/><rect x="210" y="95" width="60" height="20" fill="#B87618"/><rect x="220" y="78" width="40" height="20" fill="#C8901A"/><rect x="232" y="62" width="16" height="18" fill="#B87618"/><ellipse cx="240" cy="60" rx="10" ry="8" fill="#C8901A"/><ellipse cx="240" cy="52" rx="6" ry="5" fill="#D4A020"/><circle cx="240" cy="47" r="3" fill="#E8B830"/>
+      <rect x="400" y="110" width="80" height="90" fill="#A06810"/><rect x="410" y="95" width="60" height="20" fill="#B87618"/><rect x="420" y="78" width="40" height="20" fill="#C8901A"/><rect x="432" y="62" width="16" height="18" fill="#B87618"/><ellipse cx="440" cy="60" rx="10" ry="8" fill="#C8901A"/><ellipse cx="440" cy="52" rx="6" ry="5" fill="#D4A020"/><circle cx="440" cy="47" r="3" fill="#E8B830"/>
+      <rect x="140" y="135" width="70" height="65" fill="#8B5A0A"/><rect x="148" y="122" width="54" height="16" fill="#A06810"/><rect x="158" y="108" width="34" height="16" fill="#B87618"/><rect x="168" y="95" width="14" height="15" fill="#A06810"/><ellipse cx="175" cy="93" rx="9" ry="7" fill="#B87618"/><ellipse cx="175" cy="86" rx="5" ry="4" fill="#C8901A"/><circle cx="175" cy="82" r="3" fill="#D4A020"/>
+      <rect x="470" y="135" width="70" height="65" fill="#8B5A0A"/><rect x="478" y="122" width="54" height="16" fill="#A06810"/><rect x="488" y="108" width="34" height="16" fill="#B87618"/><rect x="498" y="95" width="14" height="15" fill="#A06810"/><ellipse cx="505" cy="93" rx="9" ry="7" fill="#B87618"/><ellipse cx="505" cy="86" rx="5" ry="4" fill="#C8901A"/><circle cx="505" cy="82" r="3" fill="#D4A020"/>
+      <rect x="80" y="155" width="65" height="45" fill="#7A4E08"/><rect x="88" y="144" width="49" height="14" fill="#8B5A0A"/><rect x="98" y="132" width="29" height="14" fill="#A06810"/><rect x="108" y="120" width="10" height="13" fill="#8B5A0A"/><ellipse cx="113" cy="118" rx="7" ry="6" fill="#A06810"/><ellipse cx="113" cy="112" rx="4" ry="3" fill="#B87618"/><circle cx="113" cy="109" r="2.5" fill="#C8901A"/>
+      <rect x="535" y="155" width="65" height="45" fill="#7A4E08"/><rect x="543" y="144" width="49" height="14" fill="#8B5A0A"/><rect x="553" y="132" width="29" height="14" fill="#A06810"/><rect x="563" y="120" width="10" height="13" fill="#8B5A0A"/><ellipse cx="568" cy="118" rx="7" ry="6" fill="#A06810"/><ellipse cx="568" cy="112" rx="4" ry="3" fill="#B87618"/><circle cx="568" cy="109" r="2.5" fill="#C8901A"/>
+      <rect x="140" y="190" width="400" height="5" fill="#8B5A0A" rx="2"/><rect x="80" y="196" width="520" height="4" fill="#7A4E08" rx="2"/>
+      <rect x="300" y="120" width="22" height="80" fill="#3A2008"/><rect x="358" y="120" width="22" height="80" fill="#3A2008"/><rect x="155" y="158" width="16" height="42" fill="#3A2008"/><rect x="189" y="158" width="16" height="42" fill="#3A2008"/><rect x="415" y="158" width="16" height="42" fill="#3A2008"/><rect x="449" y="158" width="16" height="42" fill="#3A2008"/>
+      <path d="M270 90 Q340 60 410 90" fill="none" stroke="#C8901A" stroke-width="1.5"/><path d="M200 110 Q240 88 280 110" fill="none" stroke="#B87618" stroke-width="1"/><path d="M400 110 Q440 88 480 110" fill="none" stroke="#B87618" stroke-width="1"/>
+      <rect x="0" y="195" width="80" height="25" fill="#5A3606"/><rect x="600" y="195" width="80" height="25" fill="#5A3606"/><path d="M0 185 Q40 160 80 195" fill="#5A3606"/><path d="M600 195 Q640 160 680 185" fill="#5A3606"/>
+      <rect x="0" y="200" width="680" height="20" fill="#4A2408"/>
+    </svg>
+  </div>
+  <div class="hero-text">
+    <p>Authentic South Indian home cooking, made with love and served to your door. Every dish carries the warmth of a grandmother's kitchen.</p>
+    <div class="ha">
+      <a href="#menu" class="bp">Order Now</a>
+      <a href="#about" style="background:transparent;color:rgba(250,233,200,0.85);padding:0.7rem 1.5rem;border-radius:2rem;border:1px solid rgba(232,160,40,0.55);font-size:0.9rem;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;display:inline-block;">Our Story</a>
+    </div>
+  </div>
+</div>
+<div class="feat">
+  <div class="fi">🏡 Home-cooked meals</div>
+  <div class="fi">🌶️ Authentic spices</div>
+  <div class="fi">🚚 Delivery &amp; pickup</div>
+  <div class="fi">⏰ Order by 6 PM daily</div>
+</div>
+<section id="menu">
+  <h2 class="st">Our Menu</h2>
+  <p class="ss">Freshly prepared every day with traditional recipes</p>
+  <div class="tabs">
+    <button class="tab active" onclick="filterMenu('all',this)">All Items</button>
+    <button class="tab" onclick="filterMenu('tiffin',this)">Tiffins</button>
+    <button class="tab" onclick="filterMenu('rice',this)">Rice Dishes</button>
+    <button class="tab" onclick="filterMenu('curry',this)">Veg Curries</button>
+    <button class="tab" onclick="filterMenu('fry',this)">Veg Fries</button>
+    <button class="tab" onclick="filterMenu('snacks',this)">Snacks</button>
+    <button class="tab" onclick="filterMenu('breads',this)">Breads</button>
+    <button class="tab" onclick="filterMenu('chutney',this)">Pachadis</button>
+    <button class="tab" onclick="filterMenu('podi',this)">Podis</button>
+    <button class="tab" onclick="filterMenu('sweets',this)">Sweets</button>
+  </div>
+  <div class="mg" id="menuGrid"></div>
+</section>
+<div class="about" id="about">
+  <div class="ai">
+    <h2>Our Story</h2>
+    <p>Sambrajyam Foods is a labor of love — built on decades of cooking for family, neighbours, and anyone lucky enough to sit at the table. Every recipe here carries the warmth of a grandmother's kitchen, where the aroma of freshly ground spices and simmering sambar greets you at the door.<br/><br/>We believe that good food is the greatest gift. Welcome to The Empire of Taste.</p>
+  </div>
+</div>
+<div class="co" id="cartOverlay" onclick="closeCartBg(event)">
+  <div class="cp2">
+    <div class="ch">🛒 Your Order <button class="xb" onclick="closeCart()">✕</button></div>
+    <div class="ci" id="cartItems"><div class="ce2"><span class="cei">🍽️</span><p>Your cart is empty.<br/>Add some delicious dishes!</p></div></div>
+    <div id="cartFooter" style="display:none">
+      <div class="cf2">
+        <div class="tr"><span>Subtotal</span><span id="cartSub">$0.00</span></div>
+        <div class="tr"><span>Delivery fee</span><span>$2.50</span></div>
+        <div class="tr tot"><span>Total</span><span id="cartTot">$0.00</span></div>
+        <button class="ckb" onclick="openCheckout()">Place Order →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mo" id="orderModal">
+  <div class="md" id="orderModalInner">
+    <form name="order" method="POST" action="/" data-netlify="true" netlify onsubmit="event.preventDefault(); submitOrder();">
+      <input type="hidden" name="form-name" value="order"/>
+      <input type="hidden" id="orderDetailsInput" name="Order Details" value=""/>
+      <div class="mh">📋 Your Details <button class="xb" onclick="closeCheckout()">✕</button></div>
+      <div class="mb">
+        <div class="osb" id="orderSummaryBox"></div>
+        <div class="fr">
+          <div class="fg"><label class="fl">First name *</label><input class="fi2" id="fname" name="First Name" type="text" placeholder="Priya"/></div>
+          <div class="fg"><label class="fl">Last name *</label><input class="fi2" id="lname" name="Last Name" type="text" placeholder="Kumar"/></div>
+        </div>
+        <div class="fg"><label class="fl">Phone number *</label><input class="fi2" id="phone" name="Phone" type="tel" placeholder="+1 (555) 000-0000"/></div>
+        <div class="fg"><label class="fl">Delivery address *</label><input class="fi2" id="address" name="Address" type="text" placeholder="Street address"/></div>
+        <div class="fg"><label class="fl">Order-level notes (optional)</label><textarea class="fi2" id="notes" name="Order Notes" placeholder="Anything that applies to the whole order…"></textarea></div>
+        <div class="fg"><label class="fl">Payment method *</label>
+          <select class="fi2" id="payment" name="Payment Method">
+            <option value="">Select payment</option>
+            <option value="cash">Cash on delivery</option>
+            <option value="venmo">Venmo</option>
+            <option value="zelle">Zelle</option>
+            <option value="paypal">PayPal</option>
+          </select>
+        </div>
+        <button class="ckb" type="submit">Confirm Order ✓</button>
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+const pending=`<div class="card-pending"><svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="26" height="22" rx="3" stroke="#7A5535" stroke-width="1.5"/><circle cx="11" cy="13" r="3" stroke="#7A5535" stroke-width="1.5"/><path d="M3 22 L9 16 L14 21 L20 14 L29 22" stroke="#7A5535" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Photo pending</span></div>`;
+const menu=[
+  {id:1,cat:'tiffin',n:'Idli (3 pcs)',d:'Soft steamed rice cakes with sambar and chutney.',p:6.99},
+  {id:2,cat:'tiffin',n:'Garelu / Medu Vada (2 pcs)',d:'Crispy fried lentil doughnuts with sambar and chutney.',p:7.99},
+  {id:3,cat:'tiffin',n:'Punugulu',d:'Deep-fried idli batter bites, crispy outside and fluffy inside.',p:7.99},
+  {id:4,cat:'tiffin',n:'Poori (3 pcs)',d:'Fluffy deep-fried wheat bread, light and golden.',p:8.99},
+  {id:5,cat:'tiffin',n:'Pongal',d:'Comforting rice and lentil porridge with ghee, pepper, and cashews.',p:8.99},
+  {id:6,cat:'tiffin',n:'Rava Upma',d:'Savory semolina porridge tempered with mustard seeds and curry leaves.',p:7.99},
+  {id:7,cat:'tiffin',n:'Tomato Upma',d:'Tangy semolina upma cooked with fresh tomatoes and spices.',p:8.49},
+  {id:8,cat:'tiffin',n:'Semiya Upma',d:'Vermicelli upma tossed with vegetables and a light tempering.',p:8.49},
+  {id:9,cat:'tiffin',n:'Godhuma Rava Upma',d:'Nutritious broken wheat upma with vegetables and spices.',p:8.99},
+  {id:10,cat:'rice',n:'Pulihora (Tamarind Rice)',d:'Tangy tamarind rice with peanuts, mustard seeds, and dry chillies.',p:9.99},
+  {id:11,cat:'rice',n:'Lemon Rice',d:'Bright and zesty rice with lemon, mustard seeds, and turmeric.',p:9.99},
+  {id:12,cat:'rice',n:'Pudina Rice (Mint Rice)',d:'Fragrant rice cooked with fresh mint and mild spices.',p:10.49},
+  {id:13,cat:'rice',n:'Thalimpu Annam (Seasoned Rice)',d:'Simple rice tempered with mustard seeds, curry leaves, and ghee.',p:9.99},
+  {id:14,cat:'rice',n:'Jeera Rice',d:'Fluffy basmati rice fragrant with cumin and a touch of ghee.',p:8.99},
+  {id:15,cat:'rice',n:'Vegetable Fried Rice',d:'Stir-fried rice with mixed vegetables and savory spices.',p:11.99},
+  {id:16,cat:'rice',n:'Sambar Rice',d:'Rice simmered in homemade sambar with a drizzle of ghee.',p:10.99},
+  {id:17,cat:'rice',n:'Daddojanam (Curd Rice)',d:'Cooling yogurt rice with pomegranate, ginger, and a light tempering.',p:8.99},
+  {id:18,cat:'curry',n:'Sambar',d:'Classic South Indian lentil soup with vegetables and tamarind.',p:8.99},
+  {id:19,cat:'curry',n:'Rasam',d:'Thin, peppery tomato and tamarind soup, warming and comforting.',p:7.99},
+  {id:20,cat:'curry',n:'Tomato Pappu',d:'Creamy toor dal cooked with ripe tomatoes and spices.',p:9.99},
+  {id:21,cat:'curry',n:'Gongura Pappu',d:'Tart and flavorful dal made with sorrel leaves.',p:10.99},
+  {id:22,cat:'curry',n:'Palakura Pappu',d:'Nutritious spinach dal cooked with lentils and spices.',p:9.99},
+  {id:23,cat:'curry',n:'Thotakura Pappu',d:'Amaranth greens dal, earthy and wholesome.',p:9.99},
+  {id:24,cat:'curry',n:'Gutti Vankaya',d:'Whole baby eggplants stuffed with a spiced coconut-peanut masala.',p:12.99},
+  {id:25,cat:'curry',n:'Bendakaya Pulusu',d:'Tender okra simmered in a tangy tamarind gravy.',p:11.49},
+  {id:26,cat:'curry',n:'Sorakaya Paalu Posina Koora',d:'Delicate bottle gourd cooked in a creamy milk-based curry.',p:10.99},
+  {id:27,cat:'curry',n:'Aloo Curry',d:'Hearty potato curry with onions, tomatoes, and warming spices.',p:9.99},
+  {id:28,cat:'curry',n:'Cauliflower Curry',d:'Tender cauliflower cooked in a rich spiced gravy.',p:10.99},
+  {id:29,cat:'curry',n:'Cabbage Curry',d:'Lightly spiced cabbage curry with mustard seeds and curry leaves.',p:9.49},
+  {id:30,cat:'curry',n:'Chana Masala',d:'Hearty chickpeas in a bold, spiced tomato-onion gravy.',p:10.99},
+  {id:31,cat:'fry',n:'Bangaladumpa Vepudu',d:'Crispy potato fry with mustard seeds, turmeric, and curry leaves.',p:8.99},
+  {id:32,cat:'fry',n:'Bendakaya Vepudu',d:'Golden fried okra tossed with onions and spices.',p:10.99},
+  {id:33,cat:'fry',n:'Dondakaya Vepudu',d:'Ivy gourd fry with a savory spiced tempering.',p:10.99},
+  {id:34,cat:'fry',n:'Beetroot Vepudu',d:'Sweet and earthy beetroot fry with mustard seeds and coconut.',p:9.99},
+  {id:35,cat:'fry',n:'Carrot Vepudu',d:'Lightly spiced carrot fry with fresh curry leaves.',p:9.49},
+  {id:36,cat:'fry',n:'Mixed Vegetable Fry',d:'Seasonal vegetables stir-fried with aromatic South Indian spices.',p:10.99},
+  {id:37,cat:'snacks',n:'Chakralu',d:'Crunchy rice flour spirals, lightly spiced and deep-fried.',p:7.99},
+  {id:38,cat:'snacks',n:'Murukulu',d:'Twisted savory crisps made from rice and lentil flour.',p:7.99},
+  {id:39,cat:'snacks',n:'Chekkalu',d:'Thin, crispy rice crackers with sesame seeds and spices.',p:7.99},
+  {id:40,cat:'snacks',n:'Thappala Chekkalu',d:'Flat crispy snack crackers with a savory spiced coating.',p:8.49},
+  {id:41,cat:'snacks',n:'Ribbon Pakoda',d:'Flat ribbon-shaped savory snack made from gram flour.',p:7.99},
+  {id:42,cat:'snacks',n:'Kara Boondi',d:'Tiny spiced chickpea flour pearls, crispy and addictive.',p:6.99},
+  {id:43,cat:'snacks',n:'Boondi Mixture',d:'A crunchy mix of boondi, nuts, and savory spiced bits.',p:7.99},
+  {id:44,cat:'breads',n:'Chapati (3 pcs)',d:'Soft whole wheat flatbreads, freshly made and lightly toasted.',p:4.99},
+  {id:45,cat:'chutney',n:'Avakaya Pachadi (8 oz)',d:'Classic raw mango pickle with mustard, chilli, and oil.',p:9.99},
+  {id:46,cat:'chutney',n:'Gongura Pachadi (8 oz)',d:'Tangy sorrel leaf chutney, a true Andhra classic.',p:9.99},
+  {id:47,cat:'chutney',n:'Tomato Pachadi (8 oz)',d:'Roasted tomato chutney with garlic and red chillies.',p:7.99},
+  {id:48,cat:'chutney',n:'Allam Pachadi (8 oz)',d:'Bold ginger chutney with tamarind, jaggery, and spices.',p:8.49},
+  {id:49,cat:'chutney',n:'Pudina Pachadi (8 oz)',d:'Fresh and cooling mint chutney with green chillies.',p:7.99},
+  {id:50,cat:'chutney',n:'Kobbari Pachadi (8 oz)',d:'Classic coconut chutney with mustard seeds and curry leaves.',p:7.99},
+  {id:51,cat:'chutney',n:'Palli Pachadi (8 oz)',d:'Roasted peanut chutney, rich and nutty.',p:7.99},
+  {id:52,cat:'chutney',n:'Beerakaya Pachadi (8 oz)',d:'Ridge gourd chutney with roasted lentils and tamarind.',p:8.49},
+  {id:53,cat:'chutney',n:'Sorakaya Pachadi (8 oz)',d:'Bottle gourd chutney, light and mildly spiced.',p:8.49},
+  {id:54,cat:'chutney',n:'Vankaya Pachadi (8 oz)',d:'Smoky roasted eggplant chutney with sesame seeds.',p:8.99},
+  {id:55,cat:'chutney',n:'Dondakaya Pachadi (8 oz)',d:'Ivy gourd chutney with tamarind and red chilli.',p:8.99},
+  {id:56,cat:'podi',n:'Karam Podi (8 oz)',d:'Spicy lentil and chilli powder, great with idli or rice.',p:8.99},
+  {id:57,cat:'podi',n:'Nalla Karam Podi (8 oz)',d:'A premium spicy powder blend with roasted spices.',p:9.49},
+  {id:58,cat:'podi',n:'Idli Podi (8 oz)',d:'Classic gunpowder spice mix to serve with idli and dosa.',p:8.99},
+  {id:59,cat:'podi',n:'Karivepaku Podi (8 oz)',d:'Aromatic curry leaf powder, packed with flavor and nutrition.',p:8.99},
+  {id:60,cat:'podi',n:'Nuvvula Podi (8 oz)',d:'Toasted sesame seed powder with lentils and chilli.',p:9.49},
+  {id:61,cat:'sweets',n:'Payasam',d:'Sweet, creamy milk pudding with vermicelli and cardamom.',p:5.99},
+  {id:62,cat:'sweets',n:'Rice Payasam',d:'Traditional rice kheer slow-cooked in milk with saffron.',p:6.49},
+  {id:63,cat:'sweets',n:'Rava Laddu (4 pcs)',d:'Melt-in-mouth semolina sweets with ghee, cashews, and cardamom.',p:7.99},
+  {id:64,cat:'sweets',n:'Boondi Laddu (4 pcs)',d:'Classic festival sweet made from tiny chickpea flour pearls.',p:8.99},
+  {id:65,cat:'sweets',n:'Kobbari Laddu (4 pcs)',d:'Sweet coconut balls with jaggery and cardamom.',p:8.99},
+  {id:66,cat:'sweets',n:'Sunnundalu (4 pcs)',d:'Roasted urad dal laddus with ghee and jaggery.',p:9.99},
+  {id:67,cat:'sweets',n:'Nuvvula Undalu (4 pcs)',d:'Sesame and jaggery rounds, crunchy and naturally sweet.',p:8.99},
+  {id:68,cat:'sweets',n:'Peanut Chikki (6 pcs)',d:'Crispy peanut brittle made with jaggery.',p:7.99},
+  {id:69,cat:'sweets',n:'Gavvalu',d:'Shell-shaped fried sweets coated in sugar syrup.',p:8.99},
+  {id:70,cat:'sweets',n:'Ariselu (4 pcs)',d:'Deep-fried rice and jaggery discs, a festive Andhra specialty.',p:11.99},
+  {id:71,cat:'sweets',n:'Poornalu (4 pcs)',d:'Fried dumplings filled with sweet lentil and jaggery stuffing.',p:10.99},
+  {id:72,cat:'sweets',n:'Bobbatlu / Puran Poli (3 pcs)',d:'Soft flatbread stuffed with a sweet lentil and jaggery filling.',p:11.99},
+  {id:73,cat:'sweets',n:'Mysore Pak (4 pcs)',d:'Rich, melt-in-mouth gram flour fudge with ghee.',p:9.99},
+  {id:74,cat:'sweets',n:'Kakinada Kaja (4 pcs)',d:'Flaky layered pastry soaked in sugar syrup, a regional classic.',p:10.99},
+];
+let cart={};let openCardId=null;
+function openInstr(id){
+  if(openCardId&&openCardId!==id)closeInstr(openCardId);
+  openCardId=id;
+  const card=document.getElementById('mc'+id);
+  card.classList.add('expanded');
+  const panel=card.querySelector('.instr-panel');
+  panel.classList.add('open');
+  const ta=panel.querySelector('textarea');
+  const qtyInput=panel.querySelector('input[type="number"]');
+  ta.value=cart[id]?.note||'';
+  qtyInput.value = cart[id]?.qty || 1;
+  ta.focus();
+}
+function closeInstr(id){
+  const card=document.getElementById('mc'+id);
+  if(!card)return;
+  card.classList.remove('expanded');
+  card.querySelector('.instr-panel').classList.remove('open');
+  if(openCardId===id)openCardId=null;
+}
+function confirmAdd(id){
+  const it=menu.find(i=>i.id===id);
+  const panel=document.getElementById('mc'+id).querySelector('.instr-panel');
+  const note=panel.querySelector('textarea').value.trim();
+  let qty = parseInt(panel.querySelector('input[type="number"]').value, 10);
+  if(!qty || qty < 1) qty = 1;
+  if(!cart[id]) cart[id] = {...it, qty: 0, note: ''};
+  cart[id].qty = qty;
+  cart[id].note = note;
+  closeInstr(id);
+  updateCartCount();
+  refreshCard(id);
+  renderCart();
+}
+function chg(id,d){
+  if(!cart[id])return;
+  cart[id].qty+=d;
+  if(cart[id].qty<=0)delete cart[id];
+  closeInstr(id);
+  updateCartCount();
+  refreshCard(id);
+  renderCart();
+}
+function updateCartCount(){document.getElementById('cartCount').textContent=Object.values(cart).reduce((s,i)=>s+i.qty,0);}
+function instrPanel(id){return`<div class="instr-panel"><label>Quantity</label><input type="number" min="1" value="1" class="fi2"/><label>Special Instructions</label><textarea placeholder="Spice level, allergies, omissions…"></textarea><div class="instr-row"><button class="instr-cancel" onclick="closeInstr(${id})">Cancel</button><button class="instr-confirm" onclick="confirmAdd(${id})">Add to Cart →</button></div></div>`;}
+function renderMenu(items){
+  document.getElementById('menuGrid').innerHTML=items.map(it=>{
+    const qty=cart[it.id]?.qty||0;
+    const img=it.img?`<img class="card-img" src="${it.img}" alt="${it.n}"/>`:pending;
+    const ctrl=qty===0?`<button class="ab" onclick="openInstr(${it.id})">+ Add</button>`:`<div class="qc"><button class="qb" onclick="chg(${it.id},-1)">−</button><span class="qn">${qty}</span><button class="qb" onclick="openInstr(${it.id})">+</button></div>`;
+    return`<div class="mc" id="mc${it.id}">${img}<div class="cb2"><div class="cn">${it.n}</div><div class="cd">${it.d}</div><div class="cf"><div><div class="cp"><sup>$</sup>${it.p.toFixed(2)}</div><span class="vb"><span class="vd"></span>Veg</span></div>${ctrl}</div></div>${instrPanel(it.id)}</div>`;
+  }).join('');
+}
+function refreshCard(id){
+  const c=document.getElementById('mc'+id);if(!c)return;
+  const qty=cart[id]?.qty||0;const f=c.querySelector('.cf');const last=f.children[1];if(last)last.remove();
+  if(qty===0)f.insertAdjacentHTML('beforeend',`<button class="ab" onclick="openInstr(${id})">+ Add</button>`);
+  else f.insertAdjacentHTML('beforeend',`<div class="qc"><button class="qb" onclick="chg(${id},-1)">−</button><span class="qn">${qty}</span><button class="qb" onclick="openInstr(${id})">+</button></div>`);
+}
+function filterMenu(cat,btn){openCardId=null;document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderMenu(cat==='all'?menu:menu.filter(i=>i.cat===cat));}
+function renderCart(){
+  const el=document.getElementById('cartItems');const ft=document.getElementById('cartFooter');const items=Object.values(cart);
+  if(!items.length){el.innerHTML=`<div class="ce2"><span class="cei">🍽️</span><p>Your cart is empty.<br/>Add some delicious dishes!</p></div>`;ft.style.display='none';return;}
+  ft.style.display='block';
+  el.innerHTML=items.map(i=>`<div class="cit"><div class="cithumb"></div><div class="cii"><div class="cin">${i.n}</div><div class="cip">$${i.p.toFixed(2)} each</div>${i.note?`<div class="ci-note">📝 ${i.note}</div>`:''}</div><div class="cic"><button class="cib" onclick="chg(${i.id},-1)">−</button><span class="ciq">${i.qty}</span><button class="cib" onclick="chg(${i.id},1)">+</button></div></div></div>`).join('');
+  const sub=items.reduce((s,i)=>s+i.p*i.qty,0);
+  document.getElementById('cartSub').textContent='$'+sub.toFixed(2);
+  document.getElementById('cartTot').textContent='$'+(sub+2.5).toFixed(2);
+}
+function openCart(){document.getElementById('cartOverlay').classList.add('open');renderCart();}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');}
+function closeCartBg(e){if(e.target===document.getElementById('cartOverlay'))closeCart();}
+function openCheckout(){
+  const items=Object.values(cart);
+  if(!items.length) return;
+  closeCart();
+  const sub=items.reduce((s,i)=>s+i.p*i.qty,0);
+  document.getElementById('orderSummaryBox').innerHTML=`<div class="ost">Order Summary</div>`+items.map(i=>`<div class="sl"><span>${i.n} ×${i.qty}</span><span>$${(i.p*i.qty).toFixed(2)}</span></div>${i.note?`<div class="sl-note">📝 ${i.note}</div>`:''}`).join('')+`<div class="sl stot"><span>Total (incl. delivery)</span><span>$${(sub+2.5).toFixed(2)}</span></div>`;
+  document.getElementById('orderModal').classList.add('open');
+}
+function closeCheckout(){document.getElementById('orderModal').classList.remove('open');}
+async function submitOrder(){
+  const f = document.getElementById('fname').value.trim();
+  const l = document.getElementById('lname').value.trim();
+  const ph = document.getElementById('phone').value.trim();
+  const ad = document.getElementById('address').value.trim();
+  const notes = document.getElementById('notes').value.trim();
+  const py = document.getElementById('payment').value;
+
+  if(!f || !l || !ph || !ad || !py){
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const items = Object.values(cart);
+  const orderText = items.map(i =>
+    `${i.n} x${i.qty} - $${(i.p*i.qty).toFixed(2)}${i.note ? ` | Note: ${i.note}` : ''}`
+  ).join('\n');
+
+  document.getElementById('orderDetailsInput').value = orderText;
+
+  const orderForm = document.querySelector('form[name="order"]');
+  const formData = new FormData(orderForm);
+
+  try {
+    const response = await fetch(orderForm.action || '/', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      const num = 'SF-' + Math.floor(1000 + Math.random() * 9000);
+      const m = document.getElementById('orderModalInner');
+
+      m.querySelector('.mh').innerHTML =
+        `<span>Order Placed!</span><button class="xb" onclick="resetAll()">✕</button>`;
+
+      m.querySelector('.mb').innerHTML =
+        `<div class="ss2">
+          <span class="si">🎉</span>
+          <h2>Thank you, ${f}!</h2>
+          <p>Your order <span class="on">${num}</span> has been received.<br/><br/>
+          We'll prepare your food fresh and contact you shortly at <strong>${ph}</strong> to confirm your order.<br/><br/>
+          Enjoy your meal! 🌿</p>
+          <br/>
+          <button class="ckb" style="max-width:200px;margin:0 auto;display:block" onclick="resetAll()">Back to Menu</button>
+        </div>`;
+    } else {
+      alert('There was a problem submitting your order. Please try again or contact us directly.');
+    }
+  } catch (error) {
+    alert('There was a problem submitting your order. Please try again or contact us directly.');
+  }
+}
+const initialOrderModalInner = document.getElementById('orderModalInner').innerHTML;
+function resetAll(){document.getElementById('orderModal').classList.remove('open');cart={};updateCartCount();renderMenu(menu);document.getElementById('orderModalInner').innerHTML = initialOrderModalInner;}
+renderMenu(menu);
+</script>
+</body>
+</html>
