@@ -197,7 +197,7 @@
 </div>
 <div class="mo" id="orderModal">
   <div class="md" id="orderModalInner">
-<form name="orders" method="POST" data-netlify="true">
+<form name="orders" method="POST" data-netlify="true" onsubmit="event.preventDefault(); submitOrder()">
   <input type="hidden" name="form-name" value="orders">
       <input type="hidden" id="orderDetailsInput" name="Order Details" value=""/>
       <div class="mh">📋 Your Details <button class="xb" onclick="closeCheckout()">✕</button></div>
@@ -404,16 +404,22 @@ async function submitOrder(){
 
   document.getElementById('orderDetailsInput').value = orderText;
 
-  const orderForm = document.querySelector('form[name="order"]');
+  const orderForm = document.querySelector('form[name="orders"]');
   const formData = new FormData(orderForm);
+  formData.set('form-name', 'orders');
+
+  const params = new URLSearchParams();
+  for (const [key, value] of formData.entries()) {
+    params.append(key, value);
+  }
 
   try {
-    const response = await fetch(orderForm.action || '/', {
+    const response = await fetch('/', {
       method: 'POST',
-      body: formData,
       headers: {
-        'Accept': 'application/json'
-      }
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: params.toString()
     });
 
     if (response.ok) {
